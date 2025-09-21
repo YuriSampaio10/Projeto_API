@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'geral/css/cadastro.css' %}">
+{% endblock 'head' %}
 
 {% block 'body' %}
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md d-flex justify-content-center">
@@ -44,8 +45,8 @@
             </div>
             <div class="col-md bg-main d-flex justify-content-center align-items-center">
                 <img src="#" alt="">
-                <img class="logo" src="{% static '649b49eb1ecac.jpeg' %}">
-
+                <img class="logo" src="{% static 'foto.jpeg' %}">
+                
 
 
             </div>
