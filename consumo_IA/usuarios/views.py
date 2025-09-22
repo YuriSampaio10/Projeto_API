@@ -57,3 +57,20 @@ def cadastro(request):
 def login(request):
     if request.method == "GET":
         return render(request, 'login.html')
+    
+    elif request.method == "POST": #metodo post é requisição do formulario html
+
+        #armazena o que foi digitado em variaveis
+        username = request.POST.get('username')
+        senha = request.POST.get("senha")
+
+        #verifica o que foi digitado existe no db
+        user = auth.authenticate(request, username=username, password=senha)
+
+        # if user:
+        #     auth.login(request, user)
+        #     return redirect('/pacientes/home')
+
+        #se a requisição de usuario ou senha estiver uncorretas, retorna uma mensagem de erro e recarrega a pagina
+        messages.add_message(request, constants.ERROR, 'Usuário ou senha incorretos')
+        return redirect('/usuarios/login')
