@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect #render= renderiza as paginas html; redirect= redireciona
 from django.http import HttpResponse #função para retornar uma resposta http pro usuario
+from django.contrib.auth.models import User #tabela do banco de dados 
 
 # Create your views here.
 
@@ -22,6 +23,19 @@ def cadastro(request):
         #verifica se a senha tem menos de 6 digitos
         if len(senha) < 6:
             return redirect('cadastro')
+        
+        #verifica no db se tem usuarios com o username escolhido
+        user = User.objects.filter(username=username)
+
+        if user.exists():
+            return redirect('cadastro')
+
+        #armazena o que foi digitado em uma tabela no db
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=senha
+        )
            
 
         return HttpResponse (f'{username}')
