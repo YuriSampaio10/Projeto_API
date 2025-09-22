@@ -30,8 +30,17 @@ def cadastro(request):
         #verifica no db se tem usuarios com o username escolhido
         user = User.objects.filter(username=username)
 
+        #exibe a mensagem caso ja exista um usuario em o username digitado
         if user.exists():
             messages.add_message(request, constants.ERROR, "Já existe um usuário com esse username")
+            return redirect('cadastro')
+        
+        #verifica no db se tem usuarios com o username escolhido
+        email = User.objects.filter(email=email)
+
+        #exibe a mensagem caso ja exista um usuario em o email digitado
+        if email.exists():
+            messages.add_message(request, constants.ERROR, "Já existe um usuário com esse email")
             return redirect('cadastro')
 
         #armazena o que foi digitado em uma tabela no db
