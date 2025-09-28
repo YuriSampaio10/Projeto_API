@@ -43,7 +43,7 @@
                     <img class="inline-block h-10 w-10 rounded-full " src="#" alt="#">
                 </div>
                 <div class="min-w-0 flex-1">
-                    <form id="ai-form" method="POST">
+                    <form id="ai-form" method="POST" action="{% url 'ia' %}"> {% csrf_token %}
                         <div class="border-b border-gray-200">
                             <label for="question" class="sr-only">Faça uma pergunta</label>
                             <textarea   rows="3"
