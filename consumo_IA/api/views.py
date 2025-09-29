@@ -3,17 +3,25 @@ from django.http import HttpResponse, StreamingHttpResponse #função para retor
 from django.contrib.auth.models import User #tabela do banco de dados 
 from django.contrib.messages import constants #tipo de erro
 from django.contrib import messages #função que cria a msg
-import openai
+from openai import OpenAI
+from django.views.decorators.csrf import csrf_exempt
+from decouple import config
+from django.conf import settings
+
+
 
 # Create your views here.
-
+@csrf_exempt
 def ia(request):
     if request.method == "GET":
         return render(request, 'ia.html')
     elif request.method == "POST":
         question = request.POST.get('question')
 
-        client = openai.OpenAI(api_key='#################################################')
+        OPENAI_API_KEY = config("API_KEY")
+
+
+        client = OpenAI(api_key=settings.OPENAI_API_KEY)
       
         def stream_gpt():
             result = client.chat.completions.create(
