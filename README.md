@@ -26,7 +26,7 @@ ___
 | [<img src="https://avatars.githubusercontent.com/u/103079657?v=4" width=115><br><sub>Vinicius Oliveira dos Santos da Silva</sub>](https://github.com/MaximussZ8)
 | :---: |
 
-| [<img src="https://avatars.githubusercontent.com/u/232715242?v=4" width=115><br><sub>Vinicius Cassiano Pererira de Souza</sub>](https://github.com/MaximussZ8)
+| [<img src="https://avatars.githubusercontent.com/u/232715242?v=4" width=115><br><sub>Cassiano Pererira de Souza</sub>](https://github.com/MaximussZ8)
 | :---: |
 
 | [<img src="https://avatars.githubusercontent.com/u/206223227?v=4" width=115><br><sub>Caio</sub>](https://github.com/MaximussZ8)
