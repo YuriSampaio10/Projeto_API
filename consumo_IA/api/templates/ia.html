@@ -13,85 +13,115 @@
 {% endblock 'head' %}
   </head>
 
-<body style="background-color: aqua;">
+<body class="bg-gradient-to-br from-indigo-100 to-blue-50 min-h-screen flex flex-col items-center justify-center font-sans">
+  <div class="bg-white shadow-2xl rounded-3xl max-w-4xl w-full mx-auto overflow-hidden border border-gray-200">
     
-    <div style="background-color: azure;" class="max-w-7l mx-auto">
-        <div class="sm:flex mx-auto max-w-7xl">
-            <div>
-                <h4 class="text-2xl font-bold">Sua IA personalizada </h4>
-            </div>
+    <!-- Cabeçalho -->
+    <div class="bg-gradient-to-r from-indigo-200 to-green-600 p-6 text-center text-white">
+         <div class="col-md bg-main d-flex justify-content-center align-items-center" >
+            <img class="logo" src="{% static 'Logo.png' %}" alt="Logo" style="width: 120px; height: auto;">
         </div>
-        <div style="min-height: 54rem;" class="relative mt-8">
-            <!--Respostas da IA-->
-            <div style="height: 40rem;"
-                        id="chat"
-                        class="overflow-scrool-y p-8 bg-gray-50 shadown-lg">
-                        <div class="flex items-start space-x-4 p-4">
-                            <div class="flex-shrink-0">
-                                <img class="inline-block h-10 w-10 rounded-full" src="#" alt="#">
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <form action="#">
-                                    <div class="border-b border-gray-200" id="answer"></div>
-                                </form>
-                            </div>
-                        </div>
-            
-            </div>
-            <div class="absolute bottom-0 left-0 right-0 flex items-start space-x-4 bg-white shadown-lg">
-                <div class="flex-shrink-0">
-                    <img class="inline-block h-10 w-10 rounded-full " src="#" alt="#">
-                </div>
-                <div class="min-w-0 flex-1">
-                    <form id="ai-form" method="POST"> 
-                        <div class="border-b border-gray-200">
-                            <label for="question" class="sr-only">Faça uma pergunta</label>
-                            <textarea   rows="3"
-                                        name="question"
-                                        id="question"
-                                        class="block p-4 bg-transparent w-full resize-none border-b border-transparent p-0 pb-2 text-gray-900"
-                                        placeholder="Faça uma pergunta."></textarea>
-                        </div>
-                        <div class="flex justify-between pt-2">
-                            <div class="flex-shrink-0">
-                                <button id="submit-btn"
-                                        class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadown-sm">
-                                    pergunta
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
 
-<script>
+      <h1 class="text-3xl font-bold tracking-wide">💬 Sua IA Personalizada</h1>
+      <p class="text-indigo-100 mt-1 text-sm">Converse com sua inteligência artificial em tempo real</p>
+    </div>
+
+    <!-- Área principal -->
+    <div class="relative flex flex-col justify-between h-[36rem]">
+      <!-- Caixa de respostas -->
+      <div id="chat" class="overflow-y-auto p-6 space-y-6 bg-gray-50 scroll-smooth">
+        <div id="answer" class="text-gray-700 italic text-center mt-4">
+          <p>Comece perguntando algo para a AURYN...</p>
+        </div>
+      </div>
+
+      <!-- Área de entrada -->
+      <div class="border-t border-gray-200 bg-white p-4 flex items-center space-x-3">
+        <img src="https://ui-avatars.com/api/?name=Você&background=6366F1&color=fff" 
+             alt="Usuário" 
+             class="h-10 w-10 rounded-full shadow-md">
+        
+        <form id="ai-form" method="POST" class="flex-grow flex items-center space-x-2">
+          <textarea rows="2" 
+                    name="question" 
+                    id="question"
+                    class="flex-grow rounded-xl border border-gray-300 p-3 resize-none focus:ring-2 focus:ring-indigo-400 focus:outline-none text-gray-800 placeholder-gray-400"
+                    placeholder="Digite sua pergunta..."></textarea>
+
+          <button id="submit-btn"
+                  class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl px-5 py-2 shadow-lg transition duration-200">
+            Enviar 🚀
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
     document.getElementById('ai-form').addEventListener('submit', async function(event) {
       event.preventDefault();
 
       const url = "{% url 'ia' %}";
       const question = document.getElementById('question').value;
-      const answerElement = document.getElementById('answer');
+      const chat = document.getElementById('chat');
 
-      answerElement.innerHTML = "<p><em>Carregando resposta da IA...</em></p>";
+      if (!question.trim()) return;
+
+      // Mostra a pergunta do usuário
+      const userMessage = `
+        <div class="flex justify-end">
+          <div class="bg-indigo-600 text-white p-3 rounded-2xl max-w-[75%] shadow-md">
+            <p>${question}</p>
+          </div>
+        </div>
+      `;
+      chat.insertAdjacentHTML('beforeend', userMessage);
+      chat.scrollTop = chat.scrollHeight;
+
+      document.getElementById('question').value = '';
+
+      // Mostra status de carregamento
+      const loadingMessage = `
+        <div id="loading" class="flex justify-start">
+          <div class="bg-gray-200 text-gray-700 p-3 rounded-2xl max-w-[75%] shadow-md italic">
+            Pensando...
+          </div>
+        </div>
+      `;
+      chat.insertAdjacentHTML('beforeend', loadingMessage);
+      chat.scrollTop = chat.scrollHeight;
 
       const formData = new FormData();
       formData.append('question', question);
 
       try {
-        const response = await fetch(url, {
-          method: 'POST',
-          body: formData
-        });
-
+        const response = await fetch(url, { method: 'POST', body: formData });
         const result = await response.text();
-        answerElement.innerHTML = `<p>${result}</p>`;
+
+        document.getElementById('loading').remove();
+
+        const aiMessage = `
+          <div class="flex justify-start">
+            <div class="bg-gray-100 text-gray-800 p-3 rounded-2xl max-w-[75%] shadow-md">
+              <p>${result}</p>
+            </div>
+          </div>
+        `;
+        chat.insertAdjacentHTML('beforeend', aiMessage);
+        chat.scrollTop = chat.scrollHeight;
       } catch (error) {
         console.error("Erro:", error);
-        answerElement.innerHTML = "<p>Erro ao buscar resposta da IA.</p>";
+        document.getElementById('loading').remove();
+        chat.insertAdjacentHTML('beforeend', `
+          <div class="flex justify-start">
+            <div class="bg-red-100 text-red-700 p-3 rounded-2xl max-w-[75%] shadow-md">
+              <p>⚠️ Erro ao buscar resposta da IA.</p>
+            </div>
+          </div>
+        `);
       }
     });
   </script>
+</body>
 </html>

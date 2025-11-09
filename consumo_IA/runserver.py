@@ -5,7 +5,7 @@ from threading import Thread
 
 def open_browser():
     time.sleep(1)
-    webbrowser.open("http://127.0.0.1:8000/usuarios/cadastro")
+    webbrowser.open("http://127.0.0.1:8000/usuarios/login")
 
 def run_server():
     os.system("python manage.py runserver")

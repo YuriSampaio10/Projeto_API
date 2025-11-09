@@ -1,5 +1,5 @@
 from django.urls import path #função que cria urls
-from . import views #import o arquivo viewa 
+from . import views #import o arquivo views 
 from django.urls import path, include #include = adiciona uma url em outra
 
 urlpatterns = [
