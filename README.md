@@ -24,6 +24,35 @@ Este projeto tem como objetivo desenvolver uma integração de **Inteligência A
 
 ## 📁 Estrutura do projeto
 
+Configurações iniciais
+- Primeiro devemos criar o ambiente virtual:
+	# Linux
+		python3 -m venv venv
+	# Windows
+		python -m venv venv
+​
+- Após a criação do venv vamos ativa-lo:
+	# Linux
+		source venv/bin/activate
+	# Windows
+		venv\Scripts\Activate
+
+# Caso algum comando para ativar a venv retorne um erro de permissão execute o código e tente novamente:
+
+- Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+​
+# Agora vamos fazer a instalação do Django e as demais bibliotecas
+No terminal rode os seguntes comandos:
+  - pip install django
+  - pip install pillow
+​
+# Vamos criar o nosso projeto Django:
+  - django-admin startproject healing .
+​
+# Rode o servidor para testar:
+ - python runserver.py    
+​
+
 
 
 ___
