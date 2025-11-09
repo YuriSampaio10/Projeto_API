@@ -18,10 +18,10 @@ def ia(request):
     elif request.method == "POST":
         question = request.POST.get('question')
 
-        OPENAI_API_KEY = config("API_KEY")
+        # OPENAI_API_KEY = config("API_KEY")
 
 
-        client = OpenAI(api_key=settings.OPENAI_API_KEY)
+        client = OpenAI(api_key="REMOVIDOproj-6gy_Cv8BXsrL7hzA2I-EGuuEQLFHizq5Ns-HB-PQU1HQd4PaRwjHXMk1bG3XBDH5d3B0TWb11IT3BlbkFJP4f5MTIMoub50lYBVEZBxLTPByk-R1TBoZFdpGUlkvT4skDSLQ_siIvTV7TBZRKsysxfc0bFoA")
       
         def stream_gpt():
             result = client.chat.completions.create(
