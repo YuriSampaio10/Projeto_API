@@ -21,7 +21,7 @@ def ia(request):
         # OPENAI_API_KEY = config("API_KEY")
 
 
-        client = OpenAI
+        
         
         def stream_gpt():
             result = client.chat.completions.create(
@@ -33,11 +33,12 @@ def ia(request):
                 stream=True
             )
 
-            for chunk in result: 
-                yield chunk.choices[0].delta.content
+            for chunk in result:
+                if chunk.choices[0].delta.content:
+                    yield chunk.choices[0].delta.content
 
         response_server = StreamingHttpResponse(stream_gpt())
         response_server['Cache-Control'] = 'no-cache'
-        response_server['X-acceel-Buffering'] = 'no'
+        response_server['X-accel-Buffering'] = 'no'
 
         return response_server
